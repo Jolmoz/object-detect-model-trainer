@@ -1,0 +1,10 @@
+
+spring.jpa.hibernate.ddl-auto=update
+spring.datasource.url=jdbc:mysql://localhost:3306/database
+spring.datasource.username=username
+spring.datasource.password=password
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+external.auth.url=http://localhost:8023/api/AuthenticationService/verifyAuthentication
+external.auth.validation.url=http://localhost:8023/api/AuthenticationService/getUserData
+external.user.info.url=http://localhost:8023/api/UserManagementService/getAllUsers
+#spring.jpa.show-sql: true
