@@ -1,0 +1,26 @@
+.app-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%; 
+}
+
+.container {
+    flex: 1;
+}
+
+.sidenav{
+    min-width: 200px;
+    display: flex;
+    align-items: center;
+  justify-content: center;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+  }
+
+a mat-icon {
+    top: 5px;
+    margin-right: 5px;
+    translate: 0px 5px;
+}
