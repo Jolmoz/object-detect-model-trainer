@@ -58,7 +58,6 @@ export class EditorComponent {
         this.inputs.push(input)
       }
     }
-    console.log(this.arraysItems);
 
   }
 
