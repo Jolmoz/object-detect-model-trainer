@@ -64,9 +64,8 @@ export class ModelManagerComponent implements OnInit {
       height: this.popUpsControl.HEIGHT_DEFAULT,
       data: {
         entity: model,
-        title: 'Editor de Modelo ID: ' + model.id,
+        title: 'Editor de Modelo ID: ' + (model.id == undefined ? 'Nuevo' : model.id),
         editableFields: ['modelName', 'modelPath', 'modelDescription', 'architecture', 'epochs', 'learningRate', 'batchSize', 'modelType'],
-        functionForSave: this.saveModel
       }
     }
     this.popUpsControl.openAnyDialog(EditorComponent, data).afterClosed().subscribe(

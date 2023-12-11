@@ -39,9 +39,9 @@
                        [matChipInputFor]="chipList"
                        [matAutocomplete]="auto"
                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                       (matChipInputTokenEnd)="addItem($event, arrayItem.label)" />
+                       (matChipInputTokenEnd)="addItem($event, arrayItem.label, true)" />
                 <mat-autocomplete #auto="matAutocomplete"
-                                  (optionSelected)="addItem($event, arrayItem.label)">
+                                  (optionSelected)="addItem($event, arrayItem.label, false)">
                     @for(availableArrayItem of allarraysItems; track $index){
                         @if(availableArrayItem.label == arrayItem.label){
                             @for(availableArrayItemValues of availableArrayItem.values; track $index){

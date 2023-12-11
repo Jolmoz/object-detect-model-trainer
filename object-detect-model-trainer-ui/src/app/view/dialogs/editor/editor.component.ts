@@ -54,12 +54,24 @@ export class EditorComponent {
         this.inputs.push(input)
       }
     }
-    console.log(this.entity);
-    
+    console.log(this.arraysItems);
+
   }
 
-  addItem(event, label) {
-    let item = event.option.value;
+  addItem(event, label, isFromText: boolean) {
+    let item = {};
+    if (isFromText) {
+      for (let field of this.data.editableChips[label]) {
+        if (field.toLowerCase().includes('name')) {
+          item[field] = event.value
+        } else {
+          item[field] = ''
+        }
+      }
+
+    } else {
+      item = event.option.value;
+    }
     for (let arrayItem of this.arraysItems) {
       if (arrayItem.label == label) {
         arrayItem.values.push(item)

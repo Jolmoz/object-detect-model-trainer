@@ -1,1 +1,31 @@
-<p>dataset-manager works!</p>
+<h1>Set de datos</h1>
+<table mat-table
+       [dataSource]="datasets"
+       class="mat-elevation-z8">
+
+    @for(col of displayedColumns; track col){
+    <ng-container [matColumnDef]="col">
+        @if(col.includes('user')){
+        <th mat-header-cell
+            *matHeaderCellDef> {{col}} </th>
+        <td mat-cell
+            *matCellDef="let element"> {{element[col].userName}} </td>
+        }@else {
+        <th mat-header-cell
+            *matHeaderCellDef> {{col}} </th>
+        <td mat-cell
+            *matCellDef="let element"> {{element[col]}} </td>
+        }
+
+    </ng-container>
+    }
+
+    <tr mat-header-row
+        *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row
+        (click)="editDataSet(row)"
+        *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<button (click)="editDataSet()"
+        mat-raised-button
+        color="primary">Crear DataSet</button>

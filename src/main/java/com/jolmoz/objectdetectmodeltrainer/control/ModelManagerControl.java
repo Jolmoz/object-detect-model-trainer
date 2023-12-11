@@ -83,6 +83,12 @@ public class ModelManagerControl {
 
     public ResponseEntity<DataSetDTO> saveDataSet(DataSetDTO dataSetDTO) {
         DataSet dataSet = modelMapper.map(dataSetDTO, DataSet.class);
+        for (Tag tag : dataSet.getTags()) {
+            tag.setDataSet(dataSet);
+        }
+        for (Asset asset : dataSet.getAssets()) {
+            asset.setDataSet(dataSet);
+        }
         DataSetDTO dataSetToReturn = new DataSetDTO(dataSetRepository.saveAndFlush(dataSet));
         return new ResponseEntity<DataSetDTO>(dataSetToReturn, HttpStatus.OK);
     }
