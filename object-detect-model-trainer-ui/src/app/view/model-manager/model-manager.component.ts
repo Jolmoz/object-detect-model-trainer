@@ -15,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class ModelManagerComponent implements OnInit {
   models: any[] = []
+  datasets: any[] = []
   displayedColumns: string[] = ['id', 'modelName', 'architecture', 'modelDescription', 'userAccessCreator', 'userAccessLastEditor'];
   constructor(private modelManagerClientService: ModelManagerClientService,
     private popUpsControl: PopupsControl) {
@@ -22,6 +23,17 @@ export class ModelManagerComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getAllModels()
+    this.getAllDataSets()
+  }
+
+  getAllDataSets() {
+    this.modelManagerClientService.getAllDataSets().subscribe({
+      next: (value: any[]) => {
+        this.datasets = value;
+      }, error(err) {
+        console.log(err);
+      },
+    })
   }
 
   getAllModels() {
@@ -66,6 +78,7 @@ export class ModelManagerComponent implements OnInit {
         entity: model,
         title: 'Editor de Modelo ID: ' + (model.id == undefined ? 'Nuevo' : model.id),
         editableFields: ['modelName', 'modelPath', 'modelDescription', 'architecture', 'epochs', 'learningRate', 'batchSize', 'modelType'],
+        allarraysItems: [{ label: 'dataSets', values: this.datasets }]
       }
     }
     this.popUpsControl.openAnyDialog(EditorComponent, data).afterClosed().subscribe(
