@@ -28,6 +28,8 @@ import com.jolmoz.objectdetectmodeltrainer.repository.ModelRepository;
 import com.jolmoz.objectdetectmodeltrainer.repository.RegionRepository;
 import com.jolmoz.objectdetectmodeltrainer.repository.TagRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ModelManagerControl {
 
@@ -81,14 +83,33 @@ public class ModelManagerControl {
         return dataIkDataControl.getDataSetDTOsWithUsers(token, datasets);
     }
 
+    @Transactional
     public ResponseEntity<DataSetDTO> saveDataSet(DataSetDTO dataSetDTO) {
         DataSet dataSet = modelMapper.map(dataSetDTO, DataSet.class);
         for (Tag tag : dataSet.getTags()) {
             tag.setDataSet(dataSet);
         }
+        // dataSet.setAssets(new ArrayList<>());
+
         for (Asset asset : dataSet.getAssets()) {
             asset.setDataSet(dataSet);
+            AssetDocument assetDocument = asset.getAssetDocument();
+
+            // Configura la relación bidireccional
+            assetDocument.getAsset().add(asset);
+            asset.setAssetDocument(assetDocument);
+            /*
+             * AssetDocument assetDocument =
+             * assetDocumentRepository.findById(assetDTO.getAssetDocument().getId()).get();
+             * Asset asset = modelMapper.map(assetDTO, Asset.class);
+             * dataSet.getAssets().add(asset);
+             * asset.setDataSet(dataSet);
+             * assetDocument.getAsset().add(asset);
+             * asset.setAssetDocument(assetDocument);
+             * assetRepository.saveAndFlush(asset);
+             */
         }
+
         DataSetDTO dataSetToReturn = new DataSetDTO(dataSetRepository.saveAndFlush(dataSet));
         return new ResponseEntity<DataSetDTO>(dataSetToReturn, HttpStatus.OK);
     }

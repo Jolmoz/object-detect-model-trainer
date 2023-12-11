@@ -1,5 +1,6 @@
 package com.jolmoz.objectdetectmodeltrainer.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -22,7 +23,7 @@ public class Asset {
     private long id;
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private AssetDocument assetDocument;
 
     @OneToMany(mappedBy = "asset", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -30,8 +31,12 @@ public class Asset {
     private List<Region> regions;
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private DataSet dataSet;
+
+    public Asset() {
+        this.regions = new ArrayList<>();
+    }
 
     public AssetDocument getAssetDocument() {
         return assetDocument;
@@ -64,7 +69,5 @@ public class Asset {
     public void setDataSet(DataSet dataSet) {
         this.dataSet = dataSet;
     }
-
-    
 
 }

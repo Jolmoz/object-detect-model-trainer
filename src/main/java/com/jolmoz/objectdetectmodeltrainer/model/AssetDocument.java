@@ -1,5 +1,6 @@
 package com.jolmoz.objectdetectmodeltrainer.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -31,6 +32,10 @@ public class AssetDocument {
     @OneToMany(mappedBy = "assetDocument", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Asset> asset;
+
+    public AssetDocument() {
+        this.asset = new ArrayList<>();
+    }
 
     public String getFormat() {
         return format;

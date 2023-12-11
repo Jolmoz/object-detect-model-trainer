@@ -91,6 +91,12 @@ export class EditorComponent {
     for (let atr of Object.keys(item)) {
       if (atr.toLowerCase().includes('name')) {
         return item[atr]
+      } else if (item[atr] != null && typeof item[atr] === 'object') {
+        for (let subatr of Object.keys(item[atr])) {
+          if (subatr.toLowerCase().includes('name')) {
+            return item[atr][subatr]
+          }
+        }
       }
     }
     return 'nofound'

@@ -40,19 +40,40 @@ export class ModelManagerClientService {
     return this.http.get<any[]>(environment.serverBaseUrl + 'api/ModelManagerServerApi/getAllDataSets', { headers: this.httpHeaders });
   }
 
-  saveDataSet(model): Observable<any> {
+  saveDataSet(dataset): Observable<any> {
     this.httpHeaders = new HttpHeaders({ token: this.appStorage.get("token") });
-    return this.http.post(environment.serverBaseUrl + 'api/ModelManagerServerApi/saveDataSet', model, { headers: this.httpHeaders });
+    return this.http.post(environment.serverBaseUrl + 'api/ModelManagerServerApi/saveDataSet', dataset, { headers: this.httpHeaders });
   }
 
-  deleteDataSet(model): Observable<any> {
+  deleteDataSet(dataset): Observable<any> {
     this.httpHeaders = new HttpHeaders({ token: this.appStorage.get("token") });
 
     const options: Object = {
       headers: this.httpHeaders,
-      body: model,
+      body: dataset,
       responseType: 'text'
     };
     return this.http.delete(environment.serverBaseUrl + 'api/ModelManagerServerApi/deleteDataSet', options);
+  }
+
+  getAllAssetDocuments(): Observable<any> {
+    this.httpHeaders = new HttpHeaders({ token: this.appStorage.get("token") });
+    return this.http.get<any[]>(environment.serverBaseUrl + 'api/ModelManagerServerApi/getAllAssetDocuments', { headers: this.httpHeaders });
+  }
+
+  saveAssetDocument(assetDocument): Observable<any> {
+    this.httpHeaders = new HttpHeaders({ token: this.appStorage.get("token") });
+    return this.http.post(environment.serverBaseUrl + 'api/ModelManagerServerApi/saveAssetDocument', assetDocument, { headers: this.httpHeaders });
+  }
+
+  deleteAssetDocument(assetDocument): Observable<any> {
+    this.httpHeaders = new HttpHeaders({ token: this.appStorage.get("token") });
+
+    const options: Object = {
+      headers: this.httpHeaders,
+      body: assetDocument,
+      responseType: 'text'
+    };
+    return this.http.delete(environment.serverBaseUrl + 'api/ModelManagerServerApi/deleteAssetDocument', options);
   }
 }
