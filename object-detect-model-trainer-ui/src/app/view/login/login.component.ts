@@ -36,13 +36,16 @@ export class LoginComponent {
 
   login() {
     this.popUpsControl.openSpinnerDialog('Iniciando sesión')
-    this.modelManagerClientService.loginAuthentication('Basic ' + btoa(this.userNameFormControl.value + ":" + this.passwordFormControl.value)).subscribe(token => {
-      this.storageService.set('token', token);
-      this.popUpsControl.closeAnyDialog();
-      this.router.navigateByUrl('/')
-    }, error => {
-      this.popUpsControl.closeAnyDialog();
-      this.popUpsControl.openSnackBar('Credenciales incorrectas', 'OK', 5)
-    })
+    this.modelManagerClientService.loginAuthentication('Basic ' + btoa(this.userNameFormControl.value + ":" + this.passwordFormControl.value)).subscribe(
+      {
+        next: (token: string) => {
+          this.storageService.set('token', token);
+          this.popUpsControl.closeAnyDialog();
+          this.router.navigateByUrl('/')
+        }, error: () => {
+          this.popUpsControl.closeAnyDialog();
+          this.popUpsControl.openSnackBar('Credenciales incorrectas', 'OK', 5)
+        }
+      })
   }
 }
