@@ -25,15 +25,18 @@ export class DatasetManagerComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getAllDataSets()
-    this.getAllAssetDocuments()
   }
 
   getAllDataSets() {
+    this.popUpsControl.openSpinnerDialog('Cargando set de datos')
     this.modelManagerClientService.getAllDataSets().subscribe({
       next: (value: any[]) => {
+        this.popUpsControl.closeAnyDialog()
+        this.getAllAssetDocuments()
         this.datasets = value;
       }, error(err) {
         console.log(err);
+        this.popUpsControl.closeAnyDialog()
       },
     })
   }
@@ -78,22 +81,28 @@ export class DatasetManagerComponent implements OnInit {
     this.popUpsControl.openAnyDialog(EditorComponent, data).afterClosed().subscribe(
       returnedData => {
         if (returnedData && returnedData?.action == 'save') {
+          this.popUpsControl.openSpinnerDialog('Guardando')
           this.saveDataSet(returnedData.data).subscribe(
             {
               next: () => {
+                this.popUpsControl.closeAnyDialog()
                 this.getAllDataSets();
               }, error(err) {
                 console.log(err);
+                this.popUpsControl.closeAnyDialog()
               },
             }
           );
         } else if (returnedData && returnedData?.action == 'delete') {
+          this.popUpsControl.openSpinnerDialog('Eliminando')
           this.deleteDataSet(returnedData.data).subscribe(
             {
               next: () => {
+                this.popUpsControl.closeAnyDialog()
                 this.getAllDataSets();
               }, error(err) {
                 console.log(err);
+                this.popUpsControl.closeAnyDialog()
               },
             }
           );
@@ -105,11 +114,14 @@ export class DatasetManagerComponent implements OnInit {
   }
 
   getAllAssetDocuments() {
+    this.popUpsControl.openSpinnerDialog('Cargando documentos')
     this.modelManagerClientService.getAllAssetDocuments().subscribe({
       next: (value: any[]) => {
+        this.popUpsControl.closeAnyDialog()
         this.assetDocuments = value;
       }, error(err) {
         console.log(err);
+        this.popUpsControl.closeAnyDialog()
       },
     })
   }
@@ -152,23 +164,29 @@ export class DatasetManagerComponent implements OnInit {
     this.popUpsControl.openAnyDialog(EditorComponent, data).afterClosed().subscribe(
       returnedData => {
         if (returnedData && returnedData?.action == 'save') {
+          this.popUpsControl.openSpinnerDialog('Guardando')
           this.saveAssetDocument(returnedData.data).subscribe(
             {
               next: (ob) => {
+                this.popUpsControl.closeAnyDialog()
                 //this.uploadAssetDocument(ob.id, returnedData.file).subscribe()
                 this.getAllAssetDocuments();
               }, error(err) {
                 console.log(err);
+                this.popUpsControl.closeAnyDialog()
               },
             }
           );
         } else if (returnedData && returnedData?.action == 'delete') {
+          this.popUpsControl.openSpinnerDialog('Eliminando')
           this.deleteAssetDocument(returnedData.data).subscribe(
             {
               next: () => {
+                this.popUpsControl.closeAnyDialog()
                 this.getAllAssetDocuments();
               }, error(err) {
                 console.log(err);
+                this.popUpsControl.closeAnyDialog()
               },
             }
           );

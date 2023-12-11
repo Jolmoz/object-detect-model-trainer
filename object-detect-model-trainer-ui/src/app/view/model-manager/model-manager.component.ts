@@ -23,25 +23,31 @@ export class ModelManagerComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getAllModels()
-    this.getAllDataSets()
   }
 
   getAllDataSets() {
+    this.popUpsControl.openSpinnerDialog('Cargando set de datos')
     this.modelManagerClientService.getAllDataSets().subscribe({
       next: (value: any[]) => {
         this.datasets = value;
+        this.popUpsControl.closeAnyDialog()
       }, error(err) {
         console.log(err);
+        this.popUpsControl.closeAnyDialog()
       },
     })
   }
 
   getAllModels() {
+    this.popUpsControl.openSpinnerDialog('Cargando modelos')
     this.modelManagerClientService.getAllModels().subscribe({
       next: (value: any[]) => {
+        this.popUpsControl.closeAnyDialog()
         this.models = value;
+        this.getAllDataSets()
       }, error(err) {
         console.log(err);
+        this.popUpsControl.closeAnyDialog()
       },
     })
   }
@@ -84,22 +90,28 @@ export class ModelManagerComponent implements OnInit {
     this.popUpsControl.openAnyDialog(EditorComponent, data).afterClosed().subscribe(
       returnedData => {
         if (returnedData && returnedData?.action == 'save') {
+          this.popUpsControl.openSpinnerDialog('Guardando')
           this.saveModel(returnedData.data).subscribe(
             {
               next: () => {
+                this.popUpsControl.closeAnyDialog()
                 this.getAllModels();
               }, error(err) {
                 console.log(err);
+                this.popUpsControl.closeAnyDialog()
               },
             }
           );
         } else if (returnedData && returnedData?.action == 'delete') {
+          this.popUpsControl.openSpinnerDialog('Eliminando')
           this.deleteModel(returnedData.data).subscribe(
             {
               next: () => {
+                this.popUpsControl.closeAnyDialog()
                 this.getAllModels();
               }, error(err) {
                 console.log(err);
+                this.popUpsControl.closeAnyDialog()
               },
             }
           );
