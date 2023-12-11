@@ -13,7 +13,7 @@ import com.jolmoz.objectdetectmodeltrainer.control.AuthenticationControl;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api/AuthenticationManager")
 public class AuthenticationManagerApi {
 
     @Autowired
@@ -22,7 +22,7 @@ public class AuthenticationManagerApi {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestHeader("authorization") String basicAuth) {
         ResponseEntity<String> token = authControl.login(basicAuth);
-        if (token.getBody().equals("false")) {
+        if (token.getBody() == null || token.getBody().equals("false")) {
             return new ResponseEntity<>("Credenciales incorrectas", HttpStatus.UNAUTHORIZED);
         }
         return token;

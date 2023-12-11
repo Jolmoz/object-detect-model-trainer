@@ -1,1 +1,40 @@
-<p>login works!</p>
+<div class="login-body">
+    <img class="contenimage"
+         src="../../../assets/login.jpg">
+         <mat-divider vertical="true"></mat-divider>
+    <form class="login-form" (submit)="login()">
+        <div class="input-forms">
+            <mat-form-field class="input-full-width"
+                            appearance="outline">
+                <mat-label>Usuario</mat-label>
+                <input type="text"
+                       matInput
+                       [formControl]="userNameFormControl"
+                       placeholder="Usuario de IkData">
+                @if (userNameFormControl.hasError('required')) {
+                <mat-error>El usuario es <strong>requerido</strong></mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field class="input-full-width"
+                            appearance="outline">
+                <mat-label>Contraseña</mat-label>
+                <input [type]="hidePassword ? 'password' : 'text'"
+                       matInput
+                       [formControl]="passwordFormControl"
+                       placeholder="Contraseña de IkData">
+                @if (passwordFormControl.hasError('required')) {
+                <mat-error>La contraseña es <strong>requerida</strong></mat-error>
+                }
+                <button type="button" mat-icon-button
+                        matSuffix
+                        (click)="hidePassword = !hidePassword">
+                    <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+            <button type="submit" mat-raised-button
+                    color="primary">Iniciar sesión</button>
+        </div>
+    </form>
+    
+</div>

@@ -1,17 +1,20 @@
 <div class="app-body">
   <mat-toolbar color="primary">
-    <mat-toolbar-row>
+    <mat-toolbar-row class="mat-elevation-z6">
       <span>Model Detection Object Trainer</span>
       <span class="example-spacer"></span>
     </mat-toolbar-row>
 
     <mat-toolbar-row>
+      @if (router.url != '/login'){
       <button mat-icon-button
               class="example-icon"
               aria-label="Example icon-button with menu icon"
               (click)="drawer.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
+      }
+
       <span class="example-spacer"></span>
       <button mat-icon-button
               class="example-icon favorite-icon"

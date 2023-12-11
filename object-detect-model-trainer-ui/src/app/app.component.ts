@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { ModelManagerComponent } from './view/model-manager/model-manager.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -22,4 +22,6 @@ import { bootstrapGithub } from '@ng-icons/bootstrap-icons';
 export class AppComponent {
   showFiller = false;
   menuList = [{ 'label': 'Modelos', 'path': '/models', 'icon': 'auto_fix_high' }, { 'label': 'Datasets', 'path': '/datasets', 'icon': 'dataset' }]
+
+  constructor(public router: Router){ }
 }

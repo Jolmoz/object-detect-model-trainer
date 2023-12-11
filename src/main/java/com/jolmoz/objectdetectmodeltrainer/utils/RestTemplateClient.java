@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.MethodNotAllowedException;
@@ -47,7 +48,7 @@ public class RestTemplateClient {
                         "Error al consumir el servicio. Código de estado: " + response.getStatusCode().value());
                 return new ResponseEntity<T>(response.getStatusCode());
             }
-        } catch (HttpClientErrorException e) {
+        } catch (HttpClientErrorException | HttpServerErrorException e) {
             System.err.println(
                     "Error al consumir el servicio. Código de estado: " + e.getStatusCode().value());
             return new ResponseEntity<T>(e.getStatusCode());
@@ -89,7 +90,7 @@ public class RestTemplateClient {
                         "Error al consumir el servicio. Código de estado: " + response.getStatusCode().value());
                 return new ResponseEntity<List<T>>(response.getStatusCode());
             }
-        } catch (HttpClientErrorException e) {
+        } catch (HttpClientErrorException | HttpServerErrorException e) {
             System.err.println(
                     "Error al consumir el servicio. Código de estado: " + e.getStatusCode().value());
             return new ResponseEntity<List<T>>(e.getStatusCode());
