@@ -41,7 +41,7 @@ export class LoginComponent {
         next: (token: string) => {
           this.storageService.set('token', token);
           this.popUpsControl.closeAnyDialog();
-          this.router.navigateByUrl('/')
+          this.router.navigateByUrl('/models')
         }, error: () => {
           this.popUpsControl.closeAnyDialog();
           this.popUpsControl.openSnackBar('Credenciales incorrectas', 'OK', 5)

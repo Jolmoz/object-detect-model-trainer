@@ -15,6 +15,8 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { PopupsControl } from '../../../services/popups-control';
+import { FileUploadComponent } from '../../../util-components/file-upload/file-upload.component';
 
 @Component({
   selector: 'app-editor',
@@ -30,9 +32,11 @@ export class EditorComponent {
   inputs: FormControl[] = []
   allarraysItems = []
   arraysItems = []
+  file;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data,
-    private dialogRef: MatDialogRef<EditorComponent>) {
+    private dialogRef: MatDialogRef<EditorComponent>,
+    private popUpsControl: PopupsControl) {
     this.entity = data.entity
     this.allarraysItems = data.allarraysItems
 
@@ -118,11 +122,23 @@ export class EditorComponent {
 
   submit() {
     this.refreshEntity();
-    this.dialogRef.close({ 'action': 'save', 'data': this.entity });
+    this.dialogRef.close({ 'action': 'save', 'data': this.entity, 'file': this.file });
   }
 
   delete() {
     this.refreshEntity();
     this.dialogRef.close({ 'action': 'delete', 'data': this.entity });
+  }
+
+  openUploadComponent() {
+    let data = {
+      width: this.popUpsControl.WIDTH_DEFAULT,
+      height: this.popUpsControl.HEIGHT_DEFAULT
+    }
+    this.popUpsControl.openAnyDialog(FileUploadComponent, data).afterClosed().subscribe(
+      base64 => {
+        this.file = base64
+      }
+    )
   }
 }

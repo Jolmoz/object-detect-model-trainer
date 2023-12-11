@@ -63,7 +63,15 @@ export class ModelManagerClientService {
 
   saveAssetDocument(assetDocument): Observable<any> {
     this.httpHeaders = new HttpHeaders({ token: this.appStorage.get("token") });
-    return this.http.post(environment.serverBaseUrl + 'api/ModelManagerServerApi/saveAssetDocument', assetDocument, { headers: this.httpHeaders });
+    return this.http.post(environment.serverBaseUrl + 'api/ModelManagerServerApi/saveAssetDocument', assetDocument, { headers: this.httpHeaders});
+  }
+
+  uploadAssetDocument(assetDocumentId, file): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('assetDocumentId', assetDocumentId);
+    this.httpHeaders = new HttpHeaders({ token: this.appStorage.get("token") });
+    return this.http.post(environment.serverBaseUrl + 'api/ModelManagerServerApi/uploadAssetDocument', formData, { headers: this.httpHeaders});
   }
 
   deleteAssetDocument(assetDocument): Observable<any> {

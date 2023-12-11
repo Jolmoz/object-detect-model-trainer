@@ -118,6 +118,10 @@ export class DatasetManagerComponent implements OnInit {
     return this.modelManagerClientService.saveAssetDocument(assetDocument)
   }
 
+  uploadAssetDocument(assetDocumentId, file) {
+    return this.modelManagerClientService.uploadAssetDocument(assetDocumentId, file)
+  }
+
   deleteAssetDocument(assetDocument) {
     return this.modelManagerClientService.deleteAssetDocument(assetDocument)
   }
@@ -141,7 +145,8 @@ export class DatasetManagerComponent implements OnInit {
       data: {
         entity: assetDocument,
         title: 'Editor de Modelo ID: ' + (assetDocument.id == undefined ? 'Nuevo' : assetDocument.id),
-        editableFields: ['name']
+        editableFields: ['name'],
+        withUpload: true
       }
     }
     this.popUpsControl.openAnyDialog(EditorComponent, data).afterClosed().subscribe(
@@ -149,7 +154,8 @@ export class DatasetManagerComponent implements OnInit {
         if (returnedData && returnedData?.action == 'save') {
           this.saveAssetDocument(returnedData.data).subscribe(
             {
-              next: () => {
+              next: (ob) => {
+                //this.uploadAssetDocument(ob.id, returnedData.file).subscribe()
                 this.getAllAssetDocuments();
               }, error(err) {
                 console.log(err);

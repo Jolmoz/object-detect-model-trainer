@@ -133,7 +133,14 @@ public class ModelManagerControl {
     }
 
     public ResponseEntity<AssetDocumentDTO> saveAssetDocument(AssetDocumentDTO assetDocumentDTO) {
-        AssetDocument assetDocument = modelMapper.map(assetDocumentDTO, AssetDocument.class);
+        AssetDocument assetDocument = assetDocumentRepository.findById(assetDocumentDTO.getId()).get();
+        assetDocument.setFormat(assetDocumentDTO.getFormat());
+        assetDocument.setHeight(assetDocumentDTO.getHeight());
+        assetDocument.setName(assetDocumentDTO.getName());
+        assetDocument.setPath(assetDocumentDTO.getPath());
+        assetDocument.setState(assetDocumentDTO.getState());
+        assetDocument.setType(assetDocumentDTO.getType());
+        assetDocument.setWidth(assetDocumentDTO.getWidth());
         AssetDocumentDTO assetDocumentToReturn = new AssetDocumentDTO(
                 assetDocumentRepository.saveAndFlush(assetDocument));
         return new ResponseEntity<AssetDocumentDTO>(assetDocumentToReturn, HttpStatus.OK);

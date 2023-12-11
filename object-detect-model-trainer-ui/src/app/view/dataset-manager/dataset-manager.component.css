@@ -8,3 +8,7 @@ mat-tab-group, mat-tab {
 ::ng-deep.mat-mdc-tab-body-wrapper {
     height: 100%;
 }
+
+.mat-mdc-raised-button{
+    margin-top: 20px;
+}

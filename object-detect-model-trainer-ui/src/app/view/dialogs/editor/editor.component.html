@@ -60,5 +60,9 @@
     <mat-card-actions>
         <button (click)="submit()" mat-button>GUARDAR</button>
         <button (click)="delete()" mat-button>ELIMINAR</button>
+        @if(data.withUpload){
+            <button (click)="openUploadComponent()" mat-button>SUBIR</button>
+        }
+        
     </mat-card-actions>
 </mat-card>
