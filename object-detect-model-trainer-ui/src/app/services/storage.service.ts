@@ -41,12 +41,4 @@ export class StorageService {
         return !!this.appStorage
     }
 
-    getToken(): string {
-        let token = this.get('token')
-        if (token == null) {
-            return ''
-        }
-        return token
-    }
-
 }

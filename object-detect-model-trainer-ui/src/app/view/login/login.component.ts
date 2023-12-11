@@ -9,11 +9,11 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { ModelManagerClientService } from '../../rest-api-client/model-manager-client.service';
 import { MatDividerModule } from '@angular/material/divider';
 import { PopupsControl } from '../../services/popups-control';
 import { StorageService } from '../../services/storage.service';
 import { Router } from '@angular/router';
+import { AuthenticationClientService } from '../../rest-api-client/authentication-client.service';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +27,7 @@ export class LoginComponent {
   passwordFormControl = new FormControl('', [Validators.required]);
   hidePassword = true;
 
-  constructor(private modelManagerClientService: ModelManagerClientService,
+  constructor(private authenticationClientService: AuthenticationClientService,
     private popUpsControl: PopupsControl,
     private storageService: StorageService,
     private router: Router) {
@@ -36,7 +36,7 @@ export class LoginComponent {
 
   login() {
     this.popUpsControl.openSpinnerDialog('Iniciando sesión')
-    this.modelManagerClientService.loginAuthentication('Basic ' + btoa(this.userNameFormControl.value + ":" + this.passwordFormControl.value)).subscribe(
+    this.authenticationClientService.loginAuthentication('Basic ' + btoa(this.userNameFormControl.value + ":" + this.passwordFormControl.value)).subscribe(
       {
         next: (token: string) => {
           this.storageService.set('token', token);

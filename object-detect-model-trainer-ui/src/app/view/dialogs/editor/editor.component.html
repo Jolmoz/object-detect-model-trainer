@@ -1,0 +1,64 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>{{data.title}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form class="login-form"
+              (submit)="submit()">
+            <div class="input-forms">
+                @for(input of inputs; track $index){
+                <mat-form-field class="input-full-width"
+                                appearance="outline">
+                    <mat-label>{{labels[$index]}}</mat-label>
+                    <input type="text"
+                           matInput
+                           [formControl]="input">
+                    @if (input.hasError('required')) {
+                    <mat-error>El campo es <strong>requerido</strong></mat-error>
+                    }
+                </mat-form-field>
+                }
+            </div>
+        </form>
+        @for(arrayItem of arraysItems; track $index){
+        <div id="contentChips">
+            <mat-card-subtitle>{{arrayItem.label}}</mat-card-subtitle>
+            <mat-form-field class="contentOptions">
+                <mat-chip-grid #chipList>
+                    @for(arrayItemValue of arrayItem.values; track $index){
+                    <mat-chip-row (removed)="removeItem(arrayItemValue, arrayItem.label)">
+                        {{getItemName(arrayItemValue)}}
+                        <button matChipRemove>
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </mat-chip-row>
+                    }
+                </mat-chip-grid>
+                <input placeholder="Agregar Item..."
+                       #chipsInput
+                       [matChipInputFor]="chipList"
+                       [matAutocomplete]="auto"
+                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                       (matChipInputTokenEnd)="addItem($event, arrayItem.label)" />
+                <mat-autocomplete #auto="matAutocomplete"
+                                  (optionSelected)="addItem($event, arrayItem.label)">
+                    @for(availableArrayItem of allarraysItems; track $index){
+                        @if(availableArrayItem.label == arrayItem.label){
+                            @for(availableArrayItemValues of availableArrayItem.values; track $index){
+                            <mat-option [value]="availableArrayItemValues">
+                                {{getItemName(availableArrayItemValues)}}
+                            </mat-option>
+                            }
+                        }
+                    }
+                </mat-autocomplete>
+            </mat-form-field>
+
+        </div>
+        }
+    </mat-card-content>
+    <mat-card-actions>
+        <button (click)="submit()" mat-button>GUARDAR</button>
+        <button (click)="delete()" mat-button>ELIMINAR</button>
+    </mat-card-actions>
+</mat-card>
